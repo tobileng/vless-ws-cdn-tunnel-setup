@@ -52,6 +52,8 @@ Automated Bash installer that deploys an Xray VLESS-over-WebSocket endpoint behi
 1. Clone or download this repository on your VPS.
 ```bash
    git clone https://github.com/braydos-h/vless-ws-cdn-tunnel-setup
+   ls
+   cd vless-ws-cdn-tunnel-setup
    ```
 3. Make the script executable and run it as root:
    ```bash
